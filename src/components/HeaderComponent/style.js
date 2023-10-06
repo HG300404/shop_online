@@ -6,6 +6,8 @@ export const WrapperHeader = styled(Row)`
   padding: 10px 120px;
   background-color: hsla(240, 63%, 13%, 1);
   align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;
 `;
 
 //Text Logo Header
@@ -29,4 +31,5 @@ export const WrapperHeaderAccount = styled.div`
 export const WrapperTextHeaderSmall = styled.span`
   font-size: 12px;
   color: #fff;
+  white-space: nowrap;
 `;

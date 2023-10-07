@@ -45,7 +45,7 @@ const NavbarComponent = () => {
                 disabled
                 defaultValue={option}
               />
-              ;<span> {` ${option} star`}</span>
+              <span> {` ${option} star`}</span>
             </div>
           );
         });

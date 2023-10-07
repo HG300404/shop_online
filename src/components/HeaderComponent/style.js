@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 // Header
 export const WrapperHeader = styled(Row)`
-  padding: 10px 120px;
+  padding: 10px 0;
+  width: 1270px;
   background-color: hsla(240, 63%, 13%, 1);
   align-items: center;
   gap: 16px;

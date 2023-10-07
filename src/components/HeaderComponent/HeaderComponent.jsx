@@ -15,12 +15,19 @@ import ButtonInputSearch from "../ButtonInputSearch/ButtonInputSearch";
 
 const HeaderComponent = () => {
   return (
-    <div>
+    <div
+      style={{
+        width: "100%",
+        background: "hsla(240, 63%, 13%, 1)",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
       <WrapperHeader>
-        <Col span={6}>
+        <Col span={5}>
           <WrapperTextHeader>HA Kingdom</WrapperTextHeader>
         </Col>
-        <Col span={12}>
+        <Col span={13}>
           <ButtonInputSearch
             size="large"
             textButton="Search"
@@ -31,12 +38,11 @@ const HeaderComponent = () => {
         </Col>
         <Col
           span={6}
-          style={{ display: "flex", gap: "20px", alignItems: "center" }}
+          style={{ display: "flex", gap: "54px", alignItems: "center" }}
         >
           <WrapperHeaderAccount>
-            <div>
-              <UserOutlined style={{ fontSize: "30px" }} />
-            </div>
+            <UserOutlined style={{ fontSize: "30px" }} />
+
             <div>
               <WrapperTextHeaderSmall>Login/Register</WrapperTextHeaderSmall>
               <div>

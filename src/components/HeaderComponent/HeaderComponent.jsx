@@ -12,8 +12,16 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import ButtonInputSearch from "../ButtonInputSearch/ButtonInputSearch";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const HeaderComponent = () => {
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const handleNavigateLogin = () => {
+    navigate("/sign-in");
+  };
+  console.log("user", user);
   return (
     <div
       style={{
@@ -32,7 +40,6 @@ const HeaderComponent = () => {
             size="large"
             textButton="Search"
             placeholder="Input search text"
-            bordered={false}
             //    onSearch={onSearch}
           />
         </Col>
@@ -42,14 +49,17 @@ const HeaderComponent = () => {
         >
           <WrapperHeaderAccount>
             <UserOutlined style={{ fontSize: "30px" }} />
-
-            <div>
-              <WrapperTextHeaderSmall>Login/Register</WrapperTextHeaderSmall>
-              <div>
-                <WrapperTextHeaderSmall>Account</WrapperTextHeaderSmall>
-                <CaretDownOutlined />
+            {user?.name ? (
+              <div style={{ cursor: "pointer" }}>{user.name}</div>
+            ) : (
+              <div onClick={handleNavigateLogin} style={{ cursor: "pointer" }}>
+                <WrapperTextHeaderSmall>Login/Register</WrapperTextHeaderSmall>
+                <div>
+                  <WrapperTextHeaderSmall>Account</WrapperTextHeaderSmall>
+                  <CaretDownOutlined />
+                </div>
               </div>
-            </div>
+            )}
           </WrapperHeaderAccount>
           <div>
             <Badge count={4} size="small">

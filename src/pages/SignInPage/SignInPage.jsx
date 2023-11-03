@@ -38,7 +38,6 @@ const SignInPage = () => {
             style={{ marginBottom: "10px" }}
             placeholder="abc@gmail.com"
           />
-
           <div style={{ position: "relative" }}>
             <span
               style={{

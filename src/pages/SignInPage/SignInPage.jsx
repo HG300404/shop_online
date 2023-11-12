@@ -114,7 +114,6 @@ const SignInPage = () => {
           {data?.status === "ERR" && (
             <span style={{ color: "red" }}>{data?.message}</span>
           )}
-
           <ButtonComponent
             disabled={!email.length || !password.length}
             onClick={handleSignin}
@@ -134,7 +133,6 @@ const SignInPage = () => {
               fontWeight: "700",
             }}
           ></ButtonComponent>
-
           <p>
             <WrapperTextLight>Forgot Password</WrapperTextLight>
           </p>

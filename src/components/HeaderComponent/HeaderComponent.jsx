@@ -1,10 +1,11 @@
-import React from "react";
-import { Badge, Col } from "antd";
+import React, { useEffect, useState } from "react";
+import { Badge, Button, Col, Popover } from "antd";
 import {
   WrapperHeader,
   WrapperTextHeader,
   WrapperHeaderAccount,
   WrapperTextHeaderSmall,
+  WrapperContentPopup,
 } from "./style";
 import {
   UserOutlined,
@@ -13,15 +14,43 @@ import {
 } from "@ant-design/icons";
 import ButtonInputSearch from "../ButtonInputSearch/ButtonInputSearch";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import * as UserService from "../../services/UserService.js";
+import { resetUser } from "../../redux/slides/userSlide.js";
+import Loading from "../LoadingComponent/Loading";
 const HeaderComponent = () => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const handleNavigateLogin = () => {
     navigate("/sign-in");
   };
-  console.log("user", user);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const [userName, setUserName] = useState("");
+  const [userAvatar, setUserAvatar] = useState("");
+
+  const handleLogout = async () => {
+    setLoading(true);
+    await UserService.logoutUser();
+    dispatch(resetUser());
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    setUserName(user?.name);
+    setUserAvatar(user?.avatar);
+    setLoading(false);
+  }, [user?.name, user?.avatar]);
+  const content = (
+    <div>
+      <WrapperContentPopup onClick={handleLogout}>Logout</WrapperContentPopup>
+      <WrapperContentPopup onClick={() => navigate("/profile-user")}>
+        Infor user
+      </WrapperContentPopup>
+    </div>
+  );
+
   return (
     <div
       style={{
@@ -47,20 +76,46 @@ const HeaderComponent = () => {
           span={6}
           style={{ display: "flex", gap: "54px", alignItems: "center" }}
         >
-          <WrapperHeaderAccount>
-            <UserOutlined style={{ fontSize: "30px" }} />
-            {user?.name ? (
-              <div style={{ cursor: "pointer" }}>{user.name}</div>
-            ) : (
-              <div onClick={handleNavigateLogin} style={{ cursor: "pointer" }}>
-                <WrapperTextHeaderSmall>Login/Register</WrapperTextHeaderSmall>
-                <div>
-                  <WrapperTextHeaderSmall>Account</WrapperTextHeaderSmall>
-                  <CaretDownOutlined />
+          <Loading isLoading={loading}>
+            <WrapperHeaderAccount>
+              {userAvatar ? (
+              <img
+                src={userAvatar}
+                style={{
+                  height: "30px",
+                  width: "30px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
+                alt="avatar"
+              />
+              ): (<UserOutlined style={{ fontSize: "30px" }} />
+              )}
+              {user?.access_token ? (
+                <>
+                  <Popover content={content} trigger="click">
+                    <div style={{ cursor: "pointer" }}>
+                      {userName?.length ? userName : user?.email}
+                    </div>
+                  </Popover>
+                </>
+              ) : (
+                <div
+                  onClick={handleNavigateLogin}
+                  style={{ cursor: "pointer" }}
+                >
+                  <WrapperTextHeaderSmall>
+                    Login/Register
+                  </WrapperTextHeaderSmall>
+                  <div>
+                    <WrapperTextHeaderSmall>Account</WrapperTextHeaderSmall>
+                    <CaretDownOutlined />
+                  </div>
                 </div>
-              </div>
-            )}
-          </WrapperHeaderAccount>
+              )}
+            </WrapperHeaderAccount>
+          </Loading>
+
           <div>
             <Badge count={4} size="small">
               <ShoppingCartOutlined
